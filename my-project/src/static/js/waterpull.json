@@ -1,0 +1,8 @@
+{ "flowList": [
+    { "id":1,"price":"7","title":"可口可乐", "image": "http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg","shop":"可乐工厂"},
+    { "id":2,"price":"20","title":"幽兰拿铁",  "image": "http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg","shop":"茶颜悦色"},
+    { "id":3,"price":"10","title":"酸奶",  "image": "https://cdn.uviewui.com/uview/common/classify/9/11.jpg","shop":"酸奶"},
+    { "id":4,"price":"28","title":"面包",  "image": "https://cdn.uviewui.com/uview/common/classify/11/6.jpg","shop":"面包"},
+    { "id":5,"price":"45","title":"耳机",  "image": "https://cdn.uviewui.com/uview/common/classify/11/9.jpg","shop":"耳机"}
+    ]}
+    

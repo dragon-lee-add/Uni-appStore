@@ -1,0 +1,6 @@
+{ "list": [
+    { "bannerNum":"001","title":"昨夜星辰昨夜风，画楼西畔桂堂东", "image": "../../static/img/swiper/banner1.jpg","checked":"false"},
+    { "bannerNum":"002","title":"身无彩凤双飞翼，心有灵犀一点通",  "image": "../../static/img/swiper/banner2.jpg","checked":"false"},
+    { "bannerNum":"003","title":"谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳", "image": "../../static/img/swiper/banner3.jpg","checked":"false"}
+    ]}
+    
