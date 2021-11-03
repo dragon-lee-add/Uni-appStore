@@ -23,7 +23,7 @@
                 </label>
             </view>
             <!-- 底部导航栏 -->
-            <!-- <view class="tabbar">
+            <view class="tabbar">
                 <view class="selAll">
                     <checkbox-group @change="checkboxChangeAll">
                         <checkbox :checked="isAllChecked" />全选
@@ -32,7 +32,7 @@
             </view>
             <view class="pay" @click="payment()">
                 付款
-            </view> -->
+            </view>
         </view>
         <view v-show="isShow" class="title">
             <h2>购物车空空如也</h2>
@@ -144,7 +144,7 @@
         display: flex;
         align-items: center;
         width: 80%;
-        position: absolute;
+        position: fixed;
         bottom: 45px;
     }
 
@@ -160,7 +160,7 @@
         align-items: center;
         /*垂直居中*/
         width: 20%;
-        position: absolute;
+        position: fixed;
         bottom: 45px;
         right: 0;
     }
