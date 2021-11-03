@@ -1,36 +1,41 @@
 <template>
-    <view class="cart">
-        <view class="content">
-            <label v-for="(item, index) in list" :key="index">
-                <view class="list">
-                    <view class="left">
-                        <checkbox @change="checkboxChange" :checked="checked"></checkbox>
-                        <image :src="item.image" class="image"></image>
+    <view>
+        <view class="cart">
+            <view class="content">
+                <label v-for="(item, index) in list" :key="index">
+                    <view class="list">
+                        <view class="left">
+                            <checkbox @change="checkboxChange" :checked="checked"></checkbox>
+                            <image :src="item.image" class="image"></image>
+                        </view>
+                        <view class="center">
+                            <view class="name">
+                                {{item.name}}
+                            </view>
+                            <view class="count">
+                                数量：x{{item.num}}
+                            </view>
+                            <view class="price">
+                                价格：{{item.price}}元
+                            </view>
+                        </view>
                     </view>
-                    <view class="center">
-                        <view class="name">
-                            {{item.name}}
-                        </view>
-                        <view class="count">
-                            数量：x{{item.num}}
-                        </view>
-                        <view class="price">
-                            价格：{{item.price}}元
-                        </view>
-                    </view>
-                </view>
-            </label>
-        </view>
-        <!-- 底部导航栏 -->
-        <view class="tabbar">
-            <view class="selAll">
-                <checkbox-group @change="checkboxChangeAll">
-                    <checkbox :checked="isAllChecked" />全选
-                </checkbox-group>
+                </label>
             </view>
+            <!-- 底部导航栏 -->
+            <!-- <view class="tabbar">
+                <view class="selAll">
+                    <checkbox-group @change="checkboxChangeAll">
+                        <checkbox :checked="isAllChecked" />全选
+                    </checkbox-group>
+                </view>
+            </view>
+            <view class="pay" @click="payment()">
+                付款
+            </view> -->
         </view>
-        <view class="pay" @click="payment()">
-            付款
+        <view v-show="isShow" class="title">
+            <h2>购物车空空如也</h2>
         </view>
     </view>
 </template>
@@ -43,20 +48,20 @@
             return {
                 list: [], //列表数据
                 checked: false,
-                isAllChecked: false //是否全选
+                isAllChecked: false,//是否全选
+                isShow: false
             }
         },
 
         methods: {
             checkboxChangeAll(e) {
-				this.isAllChecked = !this.isAllChecked
-				this.checked=true
-			},
+                this.isAllChecked = !this.isAllChecked
+                this.checked = true
+            },
             payment() {
                 alert("支付")
             },
             checkboxChange: function (e) {
-                console.log(e)
                 var checked = e.target.value
                 var changed = {}
                 for (var i = 0; i < this.checkboxItems.length; i++) {
@@ -72,7 +77,12 @@
                 axios.get('http://localhost:3000/shop/shopCartDeatil', {
                 }).then(function (res) {
                     _this.list = res.data
-                    console.log(_this.list)
+                    console.log(res.data)
+                    if (res.data.length == 0) {
+                        _this.isShow = true
+                    } else {
+                        _this.isShow = false
+                    }
                 }).catch(function (err) {
                     console.log(err)
                 })
@@ -80,6 +90,7 @@
         },
         onShow() {
             this.getList()
+
         }
     }
 </script>
@@ -87,6 +98,13 @@
 <style lang="scss" scoped>
     page {
         background: #f1e8e7;
+    }
+
+    .title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
     }
 
     .content {
@@ -127,7 +145,7 @@
         align-items: center;
         width: 80%;
         position: absolute;
-        bottom: 15px;
+        bottom: 45px;
     }
 
     .selAll {
@@ -143,7 +161,7 @@
         /*垂直居中*/
         width: 20%;
         position: absolute;
-        bottom: 15px;
+        bottom: 45px;
         right: 0;
     }
 </style>
