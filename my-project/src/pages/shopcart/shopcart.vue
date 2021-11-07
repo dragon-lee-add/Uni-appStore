@@ -5,7 +5,7 @@
                 <label v-for="(item, index) in list" :key="index">
                     <view class="list">
                         <view class="left">
-                            <checkbox @change="checkboxChange" :checked="checked"></checkbox>
+                            <checkbox v-bind:checked="item.isSelect" @click="item.isSelect=!item.isSelect"></checkbox>
                             <image :src="item.image" class="image"></image>
                         </view>
                         <view class="center">
@@ -13,7 +13,14 @@
                                 {{item.name}}
                             </view>
                             <view class="count">
-                                数量：x{{item.num}}
+                                数量：
+                                <a @click="item.num>0?item.num--:''">
+                                    <u-icon name="minus-square-fill"></u-icon>
+                                </a>
+                                {{item.num}}
+                                <a @click="item.num++">
+                                    <u-icon name="plus-square-fill"></u-icon>
+                                </a>
                             </view>
                             <view class="price">
                                 价格：{{item.price}}元
@@ -25,9 +32,12 @@
             <!-- 底部导航栏 -->
             <view class="tabbar">
                 <view class="selAll">
-                    <checkbox-group @change="checkboxChangeAll">
-                        <checkbox :checked="isAllChecked" />全选
+                    <checkbox-group>
+                        <checkbox @click="selectProduct(isSelectAll)" v-bind:checked="isSelectAll" />全选
                     </checkbox-group>
+                </view>
+                <view class="totalPrice">
+                    总价：{{getTotal.totalPrice}}元
                 </view>
             </view>
             <view class="pay" @click="payment()">
@@ -47,37 +57,31 @@
         data() {
             return {
                 list: [], //列表数据
-                checked: false,
-                isAllChecked: false,//是否全选
                 isShow: false
             }
         },
 
         methods: {
-            checkboxChangeAll(e) {
-                this.isAllChecked = !this.isAllChecked
-                this.checked = true
-            },
-            payment() {
-                alert("支付")
-            },
-            checkboxChange: function (e) {
-                var checked = e.target.value
-                var changed = {}
-                for (var i = 0; i < this.checkboxItems.length; i++) {
-                    if (checked.indexOf(this.checkboxItems[i].name) !== -1) {
-                        changed['checkboxItems[' + i + '].checked'] = true
-                    } else {
-                        changed['checkboxItems[' + i + '].checked'] = false
-                    }
+            selectProduct(_isSelect) {
+                //遍历productList，全部取反
+                for (var i = 0, len = this.list.length; i < len; i++) {
+                    this.list[i].isSelect = !_isSelect;
                 }
             },
+
+            payment() {
+
+            },
+
             getList() {
                 var _this = this
                 axios.get('http://localhost:3000/shop/shopCartDeatil', {
                 }).then(function (res) {
                     _this.list = res.data
-                    console.log(res.data)
+                    _this.list.map(function (item) {
+                        _this.$set(item, 'isSelect', true);
+                    })
+
                     if (res.data.length == 0) {
                         _this.isShow = true
                     } else {
@@ -88,9 +92,22 @@
                 })
             }
         },
+        computed: {
+            isSelectAll: function () {
+                //如果productList中每一条数据的isSelect都为true，返回true，否则返回false;
+                return this.list.every(function (val) { return val.isSelect });
+            },
+            getTotal: function () {
+                var prolist = this.list.filter(function (val) { return val.isSelect }),
+                    totalPri = 0;
+                for (var i = 0, len = prolist.length; i < len; i++) {
+                    totalPri += prolist[i].price * prolist[i].num;
+                }
+                return { totalNum: prolist.length, totalPrice: totalPri }
+            }
+        },
         onShow() {
             this.getList()
-
         }
     }
 </script>
@@ -104,7 +121,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
     }
 
     .content {
@@ -150,6 +167,10 @@
 
     .selAll {
         margin-left: 10px;
+    }
+
+    .totalPrice {
+        margin-left: 160px;
     }
 
     .pay {
