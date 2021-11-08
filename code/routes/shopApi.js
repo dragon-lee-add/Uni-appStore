@@ -121,5 +121,17 @@ router.get('/shopCartDeatil', function (req, res) {
         }
     })
 });
+//购物车删除
+router.get('/DelshopCart', function (req, res) {  
+    let  id = req.query.id;
+    const sqlStr = `delete  from shoppingcart where  id=${id}`;
+    conn.query(sqlStr,(err, result) => {
+        if (err) {
+            throw err;
+        } if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
 module.exports = router;
 

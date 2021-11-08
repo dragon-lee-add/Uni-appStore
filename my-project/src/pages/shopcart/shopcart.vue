@@ -15,8 +15,6 @@
                             <view class="count">
                                 数量：
                                 <button class="btn" @click="item.num>0?item.num--:''">
-                                    <!-- <u-icon name="minus-circle" color="#2979ff" size="35">
-                                    </u-icon> -->
                                     -
                                 </button>
                                 x{{item.num}}
@@ -27,6 +25,11 @@
                             <view class="price">
                                 价格：{{item.price}}元
                             </view>
+                        </view>
+                        <view class="delBtn">
+                            <button @click="delPro(item.id)">
+                                <u-icon name="trash-fill" size="38"></u-icon>
+                            </button>
                         </view>
                     </view>
                 </label>
@@ -69,6 +72,18 @@
                     this.list[i].isSelect = !_isSelect;
                 }
             },
+            delPro(id) {
+                axios.get('http://localhost:3000/shop/DelshopCart', {
+                    params: {
+                        id: id
+                    }
+                }).then(function (res) {
+                    uni.showToast({
+                        title: '删除成功',
+                    });
+                })
+                this.getList();
+            },
             payment() {
 
             },
@@ -81,7 +96,7 @@
                     _this.list.map(function (item) {
                         _this.$set(item, 'isSelect', true);
                     })
-
+                    console.log(res.data)
                     if (res.data.length == 0) {
                         _this.isShow = true
                     } else {
@@ -125,8 +140,6 @@
     .btn {
         height: 18px;
         width: 18px;
-
-
     }
 
     uni-button {
@@ -143,13 +156,13 @@
     }
 
     .content {
-        width: 670rpx;
+        width: 700rpx;
         margin: 0 auto 180rpx;
     }
 
     .list {
-        width: 672rpx;
-        height: 208rpx;
+        width: 702rpx;
+        height: 210rpx;
         background: #f9f9f9;
         box-shadow: 0 8rpx 16rpx 0 rgba(83, 66, 49, 0.08);
         border-radius: 24rpx;
@@ -157,7 +170,6 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-
     }
 
     .left {
