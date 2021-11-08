@@ -14,13 +14,15 @@
                             </view>
                             <view class="count">
                                 数量：
-                                <a @click="item.num>0?item.num--:''">
-                                    <u-icon name="minus-square-fill"></u-icon>
-                                </a>
-                                {{item.num}}
-                                <a @click="item.num++">
-                                    <u-icon name="plus-square-fill"></u-icon>
-                                </a>
+                                <button class="btn"  @click="item.num>0?item.num--:''">
+                                    <!-- <u-icon name="minus-circle" color="#2979ff" size="35">
+                                    </u-icon> -->
+                                    -
+                                </button>
+                                x{{item.num}}
+                                <button class="btn" @click="item.num++" >
+                                    +
+                                </button>
                             </view>
                             <view class="price">
                                 价格：{{item.price}}元
@@ -60,19 +62,16 @@
                 isShow: false
             }
         },
-
         methods: {
             selectProduct(_isSelect) {
-                //遍历productList，全部取反
+                //遍历List，全部取反
                 for (var i = 0, len = this.list.length; i < len; i++) {
                     this.list[i].isSelect = !_isSelect;
                 }
             },
-
             payment() {
 
             },
-
             getList() {
                 var _this = this
                 axios.get('http://localhost:3000/shop/shopCartDeatil', {
@@ -93,17 +92,17 @@
             }
         },
         computed: {
-            isSelectAll: function () {
-                //如果productList中每一条数据的isSelect都为true，返回true，否则返回false;
+            isSelectAll() {
+                //如果List中每一条数据的isSelect都为true，返回true，否则返回false;
                 return this.list.every(function (val) { return val.isSelect });
             },
-            getTotal: function () {
+            getTotal() {
                 var prolist = this.list.filter(function (val) { return val.isSelect }),
                     totalPri = 0;
                 for (var i = 0, len = prolist.length; i < len; i++) {
                     totalPri += prolist[i].price * prolist[i].num;
                 }
-                return { totalNum: prolist.length, totalPrice: totalPri }
+                return { totalPrice: totalPri }
             }
         },
         onShow() {
@@ -117,6 +116,17 @@
         background: #f1e8e7;
     }
 
+    .btn {
+        height: 18px;
+        width: 18px;
+       
+
+    }
+    uni-button{
+        display: inline-block !important;
+        line-height: 18px !important;
+        padding: 0 !important;
+    }
     .title {
         position: absolute;
         top: 50%;
@@ -170,7 +180,7 @@
     }
 
     .totalPrice {
-        margin-left: 160px;
+        margin-left: 140px;
     }
 
     .pay {
