@@ -18,8 +18,11 @@
 							</view>
 							<view class="item-container">
 								<view class="thumb-box" v-for="(item1, index1) in List" :key="index1">
-									<image class="item-menu-image" :src="item1.product_picture" mode=""></image>
-									<view class="item-menu-name">{{item1.name}}</view>
+									<a @click="Detail(item1.id)">
+										<image class="item-menu-image" :src="item1.product_picture" ></image>
+										<view class="item-menu-name">{{item1.name}}</view>
+									</a>
+
 								</view>
 							</view>
 						</view>
@@ -53,6 +56,11 @@
 			this.getCategoryRight();
 		},
 		methods: {
+			Detail(id) {
+				uni.navigateTo({
+					url: "../../pages/index/detail?id=" + id,
+				});
+			},
 			getCategoryLeft() {
 				var _this = this;
 				axios.get("http://localhost:3000/shop/category").then(function (res) {
