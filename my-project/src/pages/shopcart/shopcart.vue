@@ -14,13 +14,13 @@
                             </view>
                             <view class="count">
                                 数量：
-                                <button class="btn"  @click="item.num>0?item.num--:''">
+                                <button class="btn" @click="item.num>0?item.num--:''">
                                     <!-- <u-icon name="minus-circle" color="#2979ff" size="35">
                                     </u-icon> -->
                                     -
                                 </button>
                                 x{{item.num}}
-                                <button class="btn" @click="item.num++" >
+                                <button class="btn" @click="item.num++">
                                     +
                                 </button>
                             </view>
@@ -77,6 +77,7 @@
                 axios.get('http://localhost:3000/shop/shopCartDeatil', {
                 }).then(function (res) {
                     _this.list = res.data
+                    /*赋值，是否选中*/
                     _this.list.map(function (item) {
                         _this.$set(item, 'isSelect', true);
                     })
@@ -94,10 +95,15 @@
         computed: {
             isSelectAll() {
                 //如果List中每一条数据的isSelect都为true，返回true，否则返回false;
-                return this.list.every(function (val) { return val.isSelect });
+                return this.list.every(
+                    function (val) {
+                        return val.isSelect
+                    });
             },
             getTotal() {
-                var prolist = this.list.filter(function (val) { return val.isSelect }),
+                var prolist = this.list.filter(function (val) {
+                    return val.isSelect
+                }),
                     totalPri = 0;
                 for (var i = 0, len = prolist.length; i < len; i++) {
                     totalPri += prolist[i].price * prolist[i].num;
@@ -119,14 +125,16 @@
     .btn {
         height: 18px;
         width: 18px;
-       
+
 
     }
-    uni-button{
+
+    uni-button {
         display: inline-block !important;
         line-height: 18px !important;
         padding: 0 !important;
     }
+
     .title {
         position: absolute;
         top: 50%;
