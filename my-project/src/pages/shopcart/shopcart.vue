@@ -14,13 +14,14 @@
                             </view>
                             <view class="count">
                                 数量：
-                                <button class="btn" @click="item.num>0?item.num--:''">
+                                <u-number-box v-model="item.num"  :min="1" :max="100"></u-number-box>
+                                <!-- <button class="btn" @click="item.num>0?item.num--:''">
                                     -
                                 </button>
                                 x{{item.num}}
                                 <button class="btn" @click="item.num++">
                                     +
-                                </button>
+                                </button> -->
                             </view>
                             <view class="price">
                                 价格：{{item.price}}元
@@ -96,7 +97,6 @@
                     _this.list.map(function (item) {
                         _this.$set(item, 'isSelect', true);
                     })
-                    console.log(res.data)
                     if (res.data.length == 0) {
                         _this.isShow = true
                     } else {
