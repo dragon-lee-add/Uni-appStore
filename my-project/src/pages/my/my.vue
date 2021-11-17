@@ -42,6 +42,12 @@
             </view>
         </view>
         <!--弹出层-->
+        <!--动画加载-->
+        <u-popup v-model="showLoad" mode="center" width="400rpx" height="120px">
+            <view class="load">
+                登录中<u-loading mode="flower" size="40"></u-loading>
+            </view>
+        </u-popup>
         <!--登录-->
         <u-popup v-model="showLogin" mode="center" width="600rpx" height="240px" border-radius=45>
             <view class="form">
@@ -103,7 +109,9 @@
                 border: true,
                 showLogin: false,
                 showResigter: false,
+                showLoad: false,
                 loginName: "",//用户名
+                timer: ""//计时器
             }
         },
         onLoad() {
@@ -111,8 +119,8 @@
             this.loginName = sessionStorage.getItem("userName")
 
         },
-        onShow() {
-
+        destroyed() {
+            clearTimeout(this.timer)
         },
         methods: {
             registerUser() {
@@ -161,15 +169,16 @@
                     userName: this.loginForm.userName,
                     passWord: this.loginForm.passWord
                 }).then(function (res) {
-                    console.log(res)
                     if (res.data.length) {
-                        uni.showToast({
-                            title: '登录成功',
-                        });
                         _this.showLogin = false
-                        //存储
-                        sessionStorage.setItem("userName", res.data[0].userName);
-                        location.reload();
+                        _this.showLoad = true
+                        _this.timer = setTimeout(function () {
+                            _this.showLoad = false
+                            //存储
+                            sessionStorage.setItem("userName", res.data[0].userName);
+                            location.reload();
+                        }, 2000)
+                       
                     } else {
                         uni.showToast({
                             title: '账号或者密码输入有误',
@@ -182,7 +191,15 @@
             },
             //打开登录界面
             login() {
-                this.showLogin = true
+                if (this.loginName != null) {
+                    uni.showToast({
+                        title: '您已登录，请先退出',
+                        icon: 'none'
+                    });
+                } else {
+                    this.showLogin = true
+                }
+              
             },
             loginOut() {
                 if (this.loginName == null) {
@@ -215,6 +232,13 @@
         display: inline-block;
         line-height: 30px;
         margin-right: 10px;
+    }
+
+    .load {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -40%);
     }
 
     .camera {
