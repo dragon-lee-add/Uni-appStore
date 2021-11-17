@@ -85,7 +85,7 @@
       </template>
     </u-waterfall>
 
-    <!--懒加载-->
+    <!--加载更多-->
     <u-loadmore :status="status" />
   </view>
 </template>
@@ -101,7 +101,7 @@
         flowListOne: [],
         flowListTwo: [],
         flowListThree: [],
-        //懒加载
+        //加载
         status: 'nomore',
       };
     },

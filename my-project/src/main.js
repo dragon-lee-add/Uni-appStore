@@ -4,10 +4,11 @@ Vue.use(uView);
 
 import App from './App'
 
-
 import axios from 'axios'; /* 引入axios进行地址访问*/
-Vue.prototype.$http = axios;
-
+Vue.prototype.$http = axios;//引入vuex
+import store from './store'
+//把vuex定义成全局组件
+Vue.prototype.$store = store
 Vue.config.productionTip = false
 
 

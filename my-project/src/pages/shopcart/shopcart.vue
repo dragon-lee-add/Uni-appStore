@@ -51,7 +51,7 @@
             </view>
         </view>
         <view v-show="isShow" class="title">
-            <h2>购物车空空如也</h2>
+            <u-empty text="购物车为空" mode="car"></u-empty>
         </view>
     </view>
 </template>
