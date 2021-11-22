@@ -67,13 +67,14 @@
                 imgUrl: "",
                 price: "",
                 id: "",
-                name: ""
+                name: "",
+                userName:""
             }
         },
-
         onLoad(option) {
             this.id = option.id
             this.getList()
+            this.userName=sessionStorage.getItem("userName")
         },
         methods: {
             getList() {
@@ -106,7 +107,8 @@
                         num: this.num,
                         price: this.price,
                         product_id: this.id,
-                        image: this.imgUrl
+                        image: this.imgUrl,
+                        userName:this.userName
                     }
                 }).then(function (res) {
                     _this.show=false

@@ -14,7 +14,7 @@
                             </view>
                             <view class="count">
                                 数量：
-                                <u-number-box v-model="item.num"  :min="1" :max="100"></u-number-box>
+                                <u-number-box v-model="item.num" :min="1" :max="100"></u-number-box>
                                 <!-- <button class="btn" @click="item.num>0?item.num--:''">
                                     -
                                 </button>
@@ -62,10 +62,13 @@
         data() {
             return {
                 list: [], //列表数据
-                isShow: false
+                isShow: false,
+                userName:"",
             }
         },
-        
+        onLoad(){
+             this.userName=sessionStorage.getItem("userName")
+        },
         methods: {
             selectProduct(_isSelect) {
                 //遍历List，全部取反
@@ -91,6 +94,9 @@
             getList() {
                 var _this = this
                 axios.get('http://localhost:3000/shop/shopCartDeatil', {
+                    params:{
+                        userName:_this.userName
+                    }
                 }).then(function (res) {
                     _this.list = res.data
                     /*赋值，是否选中*/

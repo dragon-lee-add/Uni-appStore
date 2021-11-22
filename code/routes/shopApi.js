@@ -100,9 +100,9 @@ router.get('/shopCategory', function (req, res) {
 });
 //添加购物车
 router.get('/shopCart', function (req, res) {  
-    const sqlStr = 'insert into shoppingcart(name,price,product_id,num,image) values (?,?,?,?,?)';
+    const sqlStr = 'insert into shoppingcart(name,price,product_id,num,image,userName) values (?,?,?,?,?,?)';
     var params = req.query
-    conn.query(sqlStr, [params.name,params.price,params.product_id,params.num,params.image],(err, result) => {
+    conn.query(sqlStr, [params.name,params.price,params.product_id,params.num,params.image,params.userName],(err, result) => {
         if (err) {
             throw err;
         } if (result) {
@@ -112,7 +112,8 @@ router.get('/shopCart', function (req, res) {
 });
 //购物车
 router.get('/shopCartDeatil', function (req, res) {  
-    const sqlStr = 'select * from shoppingcart';
+    let userName = req.query.userName
+    const sqlStr = `select * from shoppingcart where userName='${userName}'`;
     conn.query(sqlStr,(err, result) => {
         if (err) {
             throw err;
