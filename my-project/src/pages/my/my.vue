@@ -175,6 +175,7 @@
                         _this.timer = setTimeout(function () {
                             _this.showLoad = false
                             //存储
+                            sessionStorage.setItem('isLogin',1);//登录判断
                             sessionStorage.setItem("userName", res.data[0].userName);
                             location.reload();
                         }, 2000)
@@ -209,6 +210,7 @@
                     });
                 } else {
                     sessionStorage.removeItem("userName");
+                    sessionStorage.removeItem("isLogin")
                     location.reload();//页面刷新
                 }
             }

@@ -59,13 +59,13 @@
 <script>
     import axios from "axios";
     export default {
-
         data() {
             return {
                 list: [], //列表数据
                 isShow: false
             }
         },
+        
         methods: {
             selectProduct(_isSelect) {
                 //遍历List，全部取反
