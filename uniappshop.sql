@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 28/10/2021 10:42:55
+ Date: 23/11/2021 09:34:01
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `carousel`  (
   `imgPath` char(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `describes` char(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`carousel_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of carousel
@@ -43,7 +43,7 @@ CREATE TABLE `category`  (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
@@ -94,7 +94,7 @@ CREATE TABLE `shop`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_product_category`(`category_id`) USING BTREE,
   CONSTRAINT `FK_product_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of shop
@@ -146,17 +146,17 @@ CREATE TABLE `shoppingcart`  (
   `product_id` int(11) NULL DEFAULT NULL,
   `num` int(11) NULL DEFAULT NULL,
   `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `userName` char(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_user_id`(`price`) USING BTREE,
   INDEX `FK_shoppingCart_id`(`product_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of shoppingcart
 -- ----------------------------
-INSERT INTO `shoppingcart` VALUES (6, 'Redmi K30', 2000, 1, 1, 'http://localhost:3001/static/imgs/phone/Redmi-k30.png');
-INSERT INTO `shoppingcart` VALUES (7, 'Redmi K30 5G', 2599, 2, 2, 'http://localhost:3001/static/imgs/phone/Redmi-k30-5G.png');
-INSERT INTO `shoppingcart` VALUES (8, 'Redmi Note8', 999, 7, 1, 'http://localhost:3001/static/imgs/phone/Redmi-Note8.png');
+INSERT INTO `shoppingcart` VALUES (29, 'Redmi K30 5G', 2599, 2, 1, 'http://localhost:3001/static/imgs/phone/Redmi-k30-5G.png', 'admin');
+INSERT INTO `shoppingcart` VALUES (30, '小米电视4A 32英寸', 799, 9, 1, 'http://localhost:3001/static/imgs/appliance/MiTv-4A-32.png', 'guest');
 
 -- ----------------------------
 -- Table structure for users
@@ -169,11 +169,12 @@ CREATE TABLE `users`  (
   `userPhoneNumber` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `userName`(`userName`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (1, 'admin', '123456', '15273124437');
+INSERT INTO `users` VALUES (9, 'guest', '123456', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
