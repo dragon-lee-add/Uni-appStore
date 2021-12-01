@@ -50,7 +50,7 @@
       //轮播图
       var _this = this;
       var url = 'http://localhost:3001/'
-      axios.get("http://localhost:3000/shop/shopSwiper").then(function (res) {
+      axios.get("/api/shop/shopSwiper").then(function (res) {
         let arr = res.data
         if (Array.isArray(arr)) {
           arr.forEach(item => {

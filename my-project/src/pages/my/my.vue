@@ -165,7 +165,7 @@
             },
             loginBtn() {
                 var _this = this;
-                axios.post('http://localhost:3000/users/login', {
+                axios.post('/api/users/login', {
                     userName: this.loginForm.userName,
                     passWord: this.loginForm.passWord
                 }).then(function (res) {
